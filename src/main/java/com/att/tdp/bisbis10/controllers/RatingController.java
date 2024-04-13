@@ -19,10 +19,10 @@ public class RatingController {
     /**
      * Add new rating
      * @param rating rating to add
-     * @return added rating
      */
     @PostMapping("")
-    public ResponseEntity<Rating> addRestaurant(@RequestBody Rating rating) {
-        return ResponseEntity.ok(ratingService.addRating(rating));
+    public ResponseEntity<Void> addRating(@RequestBody Rating rating) {
+        ratingService.addRating(rating);
+        return ResponseEntity.ok().build();
     }
 }

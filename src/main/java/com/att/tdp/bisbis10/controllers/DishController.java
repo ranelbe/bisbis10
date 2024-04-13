@@ -17,25 +17,15 @@ public class DishController {
     private DishService dishService;
 
     /**
-     * Get all dishes by restaurant
-     * @param restaurantId the restaurant id
-     * @return a list of dishes
-     */
-    @GetMapping
-    public ResponseEntity<List<Dish>> getDishesByRestaurant(@PathVariable Long restaurantId) {
-        return ResponseEntity.ok(dishService.getDishesByRestaurant(restaurantId));
-    }
-
-    /**
      * Add a dish to a restaurant
      * @param restaurantId the restaurant id
      * @param dish the dish to add
-     * @return the added dish
      */
     @PostMapping
-    public ResponseEntity<Dish> addDish(@PathVariable Long restaurantId,
+    public ResponseEntity<Void> addDish(@PathVariable Long restaurantId,
                                         @RequestBody Dish dish) {
-        return new ResponseEntity<>(dishService.addDish(restaurantId, dish), HttpStatus.CREATED);
+        dishService.addDish(restaurantId, dish);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
@@ -43,25 +33,35 @@ public class DishController {
      * @param restaurantId the restaurant id
      * @param dishId the dish id
      * @param dish the dish to update
-     * @return the updated dish
      */
     @PutMapping("/{dishId}")
-    public ResponseEntity<Dish> updateDish(@PathVariable Long restaurantId,
-                                           @PathVariable Long dishId,
-                                           @RequestBody Dish dish) {
-        return ResponseEntity.ok(dishService.updateDish(restaurantId, dishId, dish));
+    public ResponseEntity<Void> updateDish(@PathVariable Long restaurantId,
+                                             @PathVariable Long dishId,
+                                             @RequestBody Dish dish) {
+        dishService.updateDish(restaurantId, dishId, dish);
+        return ResponseEntity.ok().build();
     }
 
     /**
      * Delete a dish
      * @param restaurantId the restaurant id
      * @param dishId the dish id
-     * @return the deleted dish
      */
     @DeleteMapping("/{dishId}")
-    public ResponseEntity<String> deleteDish(@PathVariable Long restaurantId,
-                                           @PathVariable Long dishId) {
-        return ResponseEntity.ok(dishService.deleteDish(restaurantId, dishId));
+    public ResponseEntity<Void> deleteDish(@PathVariable Long restaurantId,
+                                             @PathVariable Long dishId) {
+        dishService.deleteDish(restaurantId, dishId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    /**
+     * Get all dishes by restaurant
+     * @param restaurantId the restaurant id
+     * @return a list of dishes
+     */
+    @GetMapping
+    public ResponseEntity<List<Dish>> getDishesByRestaurant(@PathVariable Long restaurantId) {
+        return ResponseEntity.ok(dishService.getDishesByRestaurant(restaurantId));
     }
 
 }

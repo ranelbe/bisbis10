@@ -34,7 +34,7 @@ public class RestaurantController {
     /**
      * Get restaurant by id
      * @param id id of restaurant
-     * @return restaurant
+     * @return restaurant with the given id
      */
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> getRestaurantById(@PathVariable Long id) {
@@ -44,32 +44,32 @@ public class RestaurantController {
     /**
      * Add new restaurant
      * @param restaurant restaurant to add
-     * @return added restaurant
      */
     @PostMapping("")
-    public ResponseEntity<Restaurant> addRestaurant(@RequestBody Restaurant restaurant) {
-        return new ResponseEntity<>(restaurantService.addRestaurant(restaurant), HttpStatus.CREATED);
+    public ResponseEntity<Void> addRestaurant(@RequestBody Restaurant restaurant) {
+        restaurantService.addRestaurant(restaurant);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
      * Update restaurant
      * @param id id of restaurant
      * @param restaurantDtls updated restaurant details
-     * @return updated restaurant
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable Long id,
-                                                       @RequestBody Restaurant restaurantDtls) {
-        return ResponseEntity.ok(restaurantService.updateRestaurant(id, restaurantDtls));
+    public ResponseEntity<Void> updateRestaurant(@PathVariable Long id,
+                                                   @RequestBody Restaurant restaurantDtls) {
+        restaurantService.updateRestaurant(id, restaurantDtls);
+        return ResponseEntity.ok().build();
     }
 
     /**
      * Delete restaurant
      * @param id id of restaurant
-     * @return deleted restaurant
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteRestaurant(@PathVariable Long id) {
-        return ResponseEntity.ok(restaurantService.deleteRestaurant(id));
+    public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id) {
+        restaurantService.deleteRestaurant(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

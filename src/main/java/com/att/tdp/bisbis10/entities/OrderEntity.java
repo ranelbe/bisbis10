@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class OrderEntity {
@@ -11,6 +12,8 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String orderId;
 
     @NotNull(message = "restaurantId field is mandatory")
     private Long restaurantId;
@@ -20,6 +23,7 @@ public class OrderEntity {
     private List<OrderItem> orderItems;
 
     public OrderEntity() {
+        this.orderId = UUID.randomUUID().toString();
     }
 
     public OrderEntity(Long restaurantId, List<OrderItem> orderItems) {
@@ -31,8 +35,16 @@ public class OrderEntity {
         return this.id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long orderId) {
+        this.id = orderId;
+    }
+
+    public String getOrderId() {
+        return this.orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public Long getRestaurantId() {

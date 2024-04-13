@@ -28,11 +28,11 @@ public class RestaurantService {
                 .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + id));
     }
 
-    public Restaurant addRestaurant(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
+    public void addRestaurant(Restaurant restaurant) {
+        restaurantRepository.save(restaurant);
     }
 
-    public Restaurant updateRestaurant(Long id, Restaurant restaurantDtls) {
+    public void updateRestaurant(Long id, Restaurant restaurantDtls) {
         // Check if the restaurant exists
         Restaurant existingRestaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + id));
@@ -47,16 +47,15 @@ public class RestaurantService {
             existingRestaurant.setCuisines(restaurantDtls.getCuisines());
         }
         // Save the updated restaurant
-        return restaurantRepository.save(existingRestaurant);
+        restaurantRepository.save(existingRestaurant);
     }
 
 
-    public String deleteRestaurant(Long id) {
+    public void deleteRestaurant(Long id) {
         // Check if the restaurant exists
         Restaurant existingRestaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + id));
         // Delete the restaurant
         restaurantRepository.delete(existingRestaurant);
-        return "Restaurant deleted with ID: " + id;
     }
 }
