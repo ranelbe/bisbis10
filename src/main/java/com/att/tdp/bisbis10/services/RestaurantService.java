@@ -3,11 +3,8 @@ package com.att.tdp.bisbis10.services;
 import com.att.tdp.bisbis10.entities.Restaurant;
 import com.att.tdp.bisbis10.repositories.RestaurantRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import java.util.List;
 
 @Service
@@ -42,8 +39,8 @@ public class RestaurantService {
         if(restaurantDtls.getName() != null) {
             existingRestaurant.setName(restaurantDtls.getName());
         }
-        if(restaurantDtls.getIsKosher() != existingRestaurant.getIsKosher()) {
-            existingRestaurant.setIsKosher(restaurantDtls.getIsKosher());
+        if(restaurantDtls.isKosher() != null && restaurantDtls.isKosher() != existingRestaurant.isKosher()) {
+            existingRestaurant.setIsKosher(restaurantDtls.isKosher());
         }
         if(restaurantDtls.getCuisines() != null) {
             existingRestaurant.setCuisines(restaurantDtls.getCuisines());
@@ -51,6 +48,7 @@ public class RestaurantService {
         // Save the updated restaurant
         return restaurantRepository.save(existingRestaurant);
     }
+
 
     public String deleteRestaurant(Long id) {
         // Check if the restaurant exists

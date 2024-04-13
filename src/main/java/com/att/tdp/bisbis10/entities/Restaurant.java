@@ -1,9 +1,8 @@
 package com.att.tdp.bisbis10.entities;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ElementCollection;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @Entity
@@ -12,17 +11,20 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "name field is mandatory")
     private String name;
 
-    private boolean isKosher;
+    @NotNull(message = "isKosher field is mandatory")
+    private Boolean isKosher;
 
+    @NotEmpty(message = "cuisines field is mandatory")
     @ElementCollection
     private List<String> cuisines;
 
     public Restaurant() {
     }
 
-    public Restaurant(String name, boolean isKosher, List<String> cuisines) {
+    public Restaurant(String name, Boolean isKosher, List<String> cuisines) {
         this.name = name;
         this.isKosher = isKosher;
         this.cuisines = cuisines;
@@ -44,12 +46,12 @@ public class Restaurant {
         this.name = name;
     }
 
-    public boolean getIsKosher() {
+    public Boolean isKosher() {
         return this.isKosher;
     }
 
-    public void setIsKosher(boolean kosher) {
-        this.isKosher = kosher;
+    public void setIsKosher(Boolean isKosher) {
+        this.isKosher = isKosher;
     }
 
     public List<String> getCuisines() {
