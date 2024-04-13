@@ -1,7 +1,7 @@
 package com.att.tdp.bisbis10.controllers;
 
-import com.att.tdp.bisbis10.entities.Rating;
-import com.att.tdp.bisbis10.services.RatingService;
+import com.att.tdp.bisbis10.entities.OrderEntity;
+import com.att.tdp.bisbis10.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,20 +9,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
-@RequestMapping("/ratings")
-public class RatingController {
+@RequestMapping("/order")
+public class OrderController {
 
     @Autowired
-    private RatingService ratingService;
+    private OrderService orderService;
 
     /**
-     * Add new rating
-     * @param rating rating to add
-     * @return added rating
+     * add new order
+     * @param order order to add
+     * @return added order
      */
-    @PostMapping("")
-    public ResponseEntity<Rating> addRestaurant(@RequestBody Rating rating) {
-        return ResponseEntity.ok(ratingService.addRating(rating));
+    @PostMapping
+    public ResponseEntity<OrderEntity> addOrder(@RequestBody OrderEntity order) {
+        return ResponseEntity.ok(orderService.addOrder(order));
     }
 }

@@ -1,13 +1,12 @@
 package com.att.tdp.bisbis10.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 @Entity
-public class Rating {
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,15 +15,16 @@ public class Rating {
     @NotNull(message = "restaurantId field is mandatory")
     private Long restaurantId;
 
-    @NotNull(message = "rating field is mandatory")
-    private Double rating;
+    @NotNull(message = "orderItems field is mandatory")
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
 
-    public Rating() {
+    public OrderEntity() {
     }
 
-    public Rating(Long restaurantId, Double rating) {
+    public OrderEntity(Long restaurantId, List<OrderItem> orderItems) {
         this.restaurantId = restaurantId;
-        this.rating = rating;
+        this.orderItems = orderItems;
     }
 
     public Long getId() {
@@ -43,11 +43,12 @@ public class Rating {
         this.restaurantId = restaurantId;
     }
 
-    public Double getRating() {
-        return this.rating;
+    public List<OrderItem> getOrderItems() {
+        return this.orderItems;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
+
 }
