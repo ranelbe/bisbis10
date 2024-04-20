@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.services;
 
+import com.att.tdp.bisbis10.Constants;
 import com.att.tdp.bisbis10.entities.Dish;
 import com.att.tdp.bisbis10.entities.Restaurant;
 import com.att.tdp.bisbis10.repositories.DishRepository;
@@ -17,18 +18,16 @@ public class DishService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    private final String NOT_FOUND = "Dish not found with ID: ";
-
     public void addDish(Long restaurantId, Dish dish) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
-                .orElseThrow(() -> new EntityNotFoundException("Restaurant not found with id: " + restaurantId));
+                .orElseThrow(() -> new EntityNotFoundException(Constants.RESTAURANT_NOT_FOUND + restaurantId));
         dish.setRestaurant(restaurant);
         dishRepository.save(dish);
     }
 
     public void updateDish(Long restaurantId, Long dishId, Dish dish) {
         Dish existingDish = dishRepository.findByIdAndRestaurantId(dishId, restaurantId)
-                .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + dishId));
+                .orElseThrow(() -> new EntityNotFoundException(Constants.DISH_NOT_FOUND + dishId));
         if(dish.getName() != null) {
             existingDish.setName(dish.getName());
         }
@@ -38,12 +37,13 @@ public class DishService {
         if(dish.getDescription() != null) {
             existingDish.setDescription(dish.getDescription());
         }
+        // Save the updated dish
         dishRepository.save(existingDish);
     }
 
     public void deleteDish(Long restaurantId, Long dishId) {
         Dish existingDish = dishRepository.findByIdAndRestaurantId(dishId, restaurantId)
-                .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + dishId));
+                .orElseThrow(() -> new EntityNotFoundException(Constants.DISH_NOT_FOUND + dishId));
         dishRepository.delete(existingDish);
     }
 
