@@ -2,7 +2,6 @@ package com.att.tdp.bisbis10.controllers;
 
 import com.att.tdp.bisbis10.entities.Restaurant;
 import com.att.tdp.bisbis10.services.RestaurantService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +19,8 @@ public class RestaurantController {
 
     /**
      * Get all restaurants or get restaurants by cuisine
-     * @param cuisine cuisine to filter by
-     * @return list of restaurants, empty list if no restaurants found
+     * @param cuisine cuisine to filter by (optional)
+     * @return list of restaurants (empty list if no restaurants found)
      */
     @GetMapping("")
     public ResponseEntity<List<Restaurant>> getRestaurants(@RequestParam(required = false) String cuisine) {
@@ -53,23 +52,23 @@ public class RestaurantController {
 
     /**
      * Update restaurant
-     * @param id id of restaurant
+     * @param id id of the restaurant
      * @param restaurantDtls updated restaurant details
      */
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateRestaurant(@PathVariable Long id,
-                                                   @RequestBody Restaurant restaurantDtls) {
+                                                 @RequestBody Restaurant restaurantDtls) {
         restaurantService.updateRestaurant(id, restaurantDtls);
         return ResponseEntity.ok().build();
     }
 
     /**
      * Delete restaurant
-     * @param id id of restaurant
+     * @param id id of the restaurant
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRestaurant(@PathVariable Long id) {
         restaurantService.deleteRestaurant(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 }

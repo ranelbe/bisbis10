@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.services;
 
+import com.att.tdp.bisbis10.Constants;
 import com.att.tdp.bisbis10.entities.Restaurant;
 import com.att.tdp.bisbis10.repositories.RestaurantRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,8 +14,6 @@ public class RestaurantService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    private final String NOT_FOUND = "Restaurant not found with ID: ";
-
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
     }
@@ -24,8 +23,8 @@ public class RestaurantService {
     }
 
     public Restaurant getRestaurantById(Long id) {
-        return restaurantRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + id));
+        return restaurantRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(Constants.RESTAURANT_NOT_FOUND + id));
     }
 
     public void addRestaurant(Restaurant restaurant) {
@@ -35,7 +34,7 @@ public class RestaurantService {
     public void updateRestaurant(Long id, Restaurant restaurantDtls) {
         // Check if the restaurant exists
         Restaurant existingRestaurant = restaurantRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + id));
+                .orElseThrow(() -> new EntityNotFoundException(Constants.RESTAURANT_NOT_FOUND + id));
 
         if(restaurantDtls.getName() != null) {
             existingRestaurant.setName(restaurantDtls.getName());
@@ -50,11 +49,10 @@ public class RestaurantService {
         restaurantRepository.save(existingRestaurant);
     }
 
-
     public void deleteRestaurant(Long id) {
         // Check if the restaurant exists
         Restaurant existingRestaurant = restaurantRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + id));
+                .orElseThrow(() -> new EntityNotFoundException(Constants.RESTAURANT_NOT_FOUND + id));
         // Delete the restaurant
         restaurantRepository.delete(existingRestaurant);
     }

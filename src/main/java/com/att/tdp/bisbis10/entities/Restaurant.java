@@ -1,4 +1,5 @@
 package com.att.tdp.bisbis10.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -17,6 +18,9 @@ public class Restaurant {
 
     private Double rating = 0.0;
 
+    @JsonIgnore
+    private Integer ratingsAmount = 0;
+
     @NotNull(message = "isKosher field is mandatory")
     private Boolean isKosher;
 
@@ -27,6 +31,10 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Dish> dishes;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<OrderEntity> orders;
 
 
     public Restaurant() {
@@ -62,6 +70,14 @@ public class Restaurant {
         this.rating = rating;
     }
 
+    public Integer getRatingsAmount() {
+        return this.ratingsAmount;
+    }
+
+    public void setRatingsAmount(Integer ratingsAmount) {
+        this.ratingsAmount = ratingsAmount;
+    }
+
     public Boolean isKosher() {
         return this.isKosher;
     }
@@ -85,6 +101,14 @@ public class Restaurant {
 
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
+    }
+
+    public List<OrderEntity> getOrders() {
+        return this.orders;
+    }
+
+    public void setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
     }
 
 }

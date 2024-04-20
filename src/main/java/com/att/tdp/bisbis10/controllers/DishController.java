@@ -51,7 +51,7 @@ public class DishController {
     public ResponseEntity<Void> deleteDish(@PathVariable Long restaurantId,
                                              @PathVariable Long dishId) {
         dishService.deleteDish(restaurantId, dishId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
     /**
